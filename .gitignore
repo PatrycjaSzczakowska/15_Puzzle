@@ -2,7 +2,7 @@
 .gitignore
 .idea/vcs.xml
 .idea/workspace.xml
-src/main/java/Puzzle/
+src/main/java/Structure/
 src/main/java/Solver/
 src/main/resources/
 src/test/

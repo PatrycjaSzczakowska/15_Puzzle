@@ -1,20 +1,19 @@
-package Puzzle;
+package Structure;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-public enum MoveDirectionEnum implements Comparator<MoveDirectionEnum> {
-    LEFT('L', 1),
-    RIGHT('R', 2),
-    DOWN('D', 3),
-    UP('U', 4);
+public enum MoveDirectionEnum {
+    RIGHT('R'),
+    LEFT('L'),
+    DOWN('D'),
+    UP('U');
 
     private char letter;
-    private int order;
 
-    MoveDirectionEnum(char letter, int order) {
+    MoveDirectionEnum(char letter) {
         this.letter = letter;
     }
 
@@ -22,8 +21,13 @@ public enum MoveDirectionEnum implements Comparator<MoveDirectionEnum> {
         return letter;
     }
 
-    public int getOrder() {
-        return order;
+    public static MoveDirectionEnum getMoveDirectionByLetter(char letter){
+        for (MoveDirectionEnum move: MoveDirectionEnum.values()) {
+            if(move.getLetter()==letter){
+                return move;
+            }
+        }
+        return null;
     }
 
     public static MoveDirectionEnum getRandomMove() {
@@ -31,12 +35,11 @@ public enum MoveDirectionEnum implements Comparator<MoveDirectionEnum> {
         return MoveDirectionEnum.values()[pick];
     }
 
-    public static List<MoveDirectionEnum> getAllMoves() {
-        List<MoveDirectionEnum> moves = new ArrayList<MoveDirectionEnum>();
-        moves.add(LEFT);
-        moves.add(RIGHT);
-        moves.add(UP);
-        moves.add(DOWN);
+    public static List<MoveDirectionEnum> getAllMoves(char[] movesOrder) {
+        List<MoveDirectionEnum> moves = new ArrayList<MoveDirectionEnum>(4);
+        for(char c : movesOrder){
+            moves.add(getMoveDirectionByLetter(c));
+        }
         return moves;
     }
 
@@ -58,11 +61,4 @@ public enum MoveDirectionEnum implements Comparator<MoveDirectionEnum> {
         return null;
     }
 
-    public int compare(MoveDirectionEnum o1, MoveDirectionEnum o2) {
-        if (o1.getOrder() < o2.getOrder()) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
 }

@@ -1,11 +1,9 @@
-package Puzzle;
+package Structure;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Puzzle {
     private int[][] board;
@@ -114,14 +112,14 @@ public class Puzzle {
         }
     }
 
-    public List<MoveDirectionEnum> getPossibleMoves() {
-        List<MoveDirectionEnum> moves = new ArrayList<MoveDirectionEnum>();
-        for (MoveDirectionEnum move : MoveDirectionEnum.getAllMoves()) {
+    public List<MoveDirectionEnum> getPossibleMoves(List<MoveDirectionEnum> moves) {
+        List<MoveDirectionEnum> possibleMoves= new ArrayList<MoveDirectionEnum>();
+        for (MoveDirectionEnum move : moves) {
             if (validateMove(move)) {
-                moves.add(move);
+                possibleMoves.add(move);
             }
         }
-        return moves;
+        return possibleMoves;
     }
 
     public boolean isGoalState() {
@@ -151,19 +149,5 @@ public class Puzzle {
         }
 
         return newPuzzle;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (!(o instanceof Puzzle)) return false;
-
-        Puzzle puzzle = (Puzzle) o;
-
-        return new EqualsBuilder()
-                .append(board, puzzle.board)
-                .append(emptyElementPosition, puzzle.emptyElementPosition)
-                .isEquals();
     }
 }

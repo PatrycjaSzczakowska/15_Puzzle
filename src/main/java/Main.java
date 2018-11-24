@@ -1,16 +1,19 @@
-import Puzzle.Puzzle;
-import Puzzle.MoveDirectionEnum;
+import Structure.MoveDirectionEnum;
+import Structure.Puzzle;
+import Solver.DFS;
 
 public class Main {
     public static void main(String[] args) {
         Puzzle puzzle = new Puzzle(4);
         puzzle.fillCorrectly();
 
-        puzzle.shuffle(10);
+        puzzle.shuffle(12);
+
         puzzle.print();
-        BFS bfs = new BFS(puzzle);
-        bfs.run();
-        System.out.print(bfs.getSolutionToString());
+        char [] moveOrder = {'R','L','U','D'};
+        DFS dfs = new DFS(puzzle, moveOrder);
+        dfs.run();
+        System.out.print(dfs.getSolutionToString());
 
     }
 }
