@@ -17,11 +17,9 @@ public class PuzzleController {
 
     public void shuffle(int numberOfIterations) {
         Random random = new Random();
-
         for (int i = 0; i < numberOfIterations; i++) {
             move(MoveDirectionEnum.getRandomMove());
         }
-
     }
 
     public boolean move(MoveDirectionEnum moveDirection) {
@@ -44,12 +42,20 @@ public class PuzzleController {
 
     }
 
-    private boolean validateMove(MoveDirectionEnum moveDirection) {
-        if (MoveDirectionEnum.UP == moveDirection && puzzle.getMovableElementPosition().getX() == 0 ||
-                MoveDirectionEnum.DOWN == moveDirection && puzzle.getMovableElementPosition().getX() == puzzle.getSideLength() - 1 ||
-                MoveDirectionEnum.LEFT == moveDirection && puzzle.getMovableElementPosition().getY() == 0 ||
-                MoveDirectionEnum.RIGHT == moveDirection && puzzle.getMovableElementPosition().getY() == puzzle.getSideLength() - 1) {
-            return false;
+    public boolean validateMove(MoveDirectionEnum moveDirection) {
+        switch (moveDirection) {
+            case UP:
+                if (puzzle.getMovableElementPosition().getX() == 0) return false;
+                else return true;
+            case DOWN:
+                if (puzzle.getMovableElementPosition().getX() == puzzle.getSideLength() - 1) return false;
+                else return true;
+            case LEFT:
+                if (puzzle.getMovableElementPosition().getY() == 0) return false;
+                else return true;
+            case RIGHT:
+                if (puzzle.getMovableElementPosition().getY() == puzzle.getSideLength() - 1) return false;
+                else return true;
         }
         return true;
     }
