@@ -5,25 +5,19 @@ import java.util.List;
 import java.util.Random;
 
 public enum MoveDirectionEnum {
-    LEFT(0, -1),
-    RIGHT(0, 1),
-    DOWN(1, 0),
-    UP(-1, 0);
+    LEFT('L'),
+    RIGHT('R'),
+    DOWN('D'),
+    UP('U');
 
-    private int x;
-    private int y;
+    private char letter;
 
-    MoveDirectionEnum(int x, int y) {
-        this.x = x;
-        this.y = y;
+    MoveDirectionEnum(char letter) {
+        this.letter = letter;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+    public char getLetter() {
+        return letter;
     }
 
     public static MoveDirectionEnum getRandomMove() {
@@ -38,5 +32,24 @@ public enum MoveDirectionEnum {
         moves.add(UP);
         moves.add(DOWN);
         return moves;
+    }
+
+    public static MoveDirectionEnum getOppositeMove(MoveDirectionEnum moveDirection) {
+        switch (moveDirection) {
+            case UP: {
+                return MoveDirectionEnum.DOWN;
+            }
+            case DOWN: {
+                return MoveDirectionEnum.UP;
+
+            }
+            case LEFT: {
+                return MoveDirectionEnum.RIGHT;
+            }
+            case RIGHT: {
+                return MoveDirectionEnum.LEFT;
+            }
+        }
+        return null;
     }
 }
