@@ -6,7 +6,7 @@ public class Main {
         Puzzle puzzle = new Puzzle(4);
         puzzle.fillCorrectly();
 
-        puzzle.shuffle(8);
+        puzzle.shuffle(10);
         puzzle.print();
         BFS bfs = new BFS(puzzle);
         bfs.run();

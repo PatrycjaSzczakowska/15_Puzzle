@@ -1,23 +1,29 @@
 package Puzzle;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-public enum MoveDirectionEnum {
-    LEFT('L'),
-    RIGHT('R'),
-    DOWN('D'),
-    UP('U');
+public enum MoveDirectionEnum implements Comparator<MoveDirectionEnum> {
+    LEFT('L',1),
+    RIGHT('R',2),
+    DOWN('D',3),
+    UP('U',4);
 
     private char letter;
+    private int order;
 
-    MoveDirectionEnum(char letter) {
+    MoveDirectionEnum(char letter, int order) {
         this.letter = letter;
     }
 
     public char getLetter() {
         return letter;
+    }
+
+    public int getOrder() {
+        return order;
     }
 
     public static MoveDirectionEnum getRandomMove() {
@@ -41,7 +47,6 @@ public enum MoveDirectionEnum {
             }
             case DOWN: {
                 return MoveDirectionEnum.UP;
-
             }
             case LEFT: {
                 return MoveDirectionEnum.RIGHT;
@@ -51,5 +56,13 @@ public enum MoveDirectionEnum {
             }
         }
         return null;
+    }
+
+    public int compare(MoveDirectionEnum o1, MoveDirectionEnum o2) {
+        if(o1.getOrder()<o2.getOrder()){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }

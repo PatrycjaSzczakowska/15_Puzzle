@@ -1,16 +1,13 @@
 import Puzzle.Puzzle;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 import Puzzle.MoveDirectionEnum;
 
 public class BFS {
 
     private Queue<State> statesToVisit;
-    private List<State> previousStates;
+    private List<Puzzle> previousPuzzles;
     private State stateToSolve;
     private int visitedStates;
     private int maxDepth;
@@ -24,7 +21,7 @@ public class BFS {
         this.maxDepth = 0;
         this.visitedStates = 0;
         this.processedStates = 0;
-        this.previousStates = new ArrayList<State>();
+        this.previousPuzzles = new ArrayList<Puzzle>();
         this.movesOfSolution = new String();
     }
 
@@ -35,8 +32,10 @@ public class BFS {
 
         while (!statesToVisit.isEmpty()) {
             State currentState = statesToVisit.remove();
+            previousPuzzles.add(currentState.getPuzzle());
             visitedStates++;
             if (currentState.isGoalState()) {
+                time = (int) ((System.nanoTime() - startTime) / 1000000);
                 movesOfSolution = currentState.getDoneMoves();
                 maxDepth=currentState.getDepth();
                 return;
@@ -47,12 +46,16 @@ public class BFS {
     }
 
     private void exploreState(State currentState) {
-        for (MoveDirectionEnum move : currentState.getPossibleMoves()) {
+        List<MoveDirectionEnum> possibleMoves= currentState.getPossibleMoves();
+        Collections.sort(possibleMoves);
+        for (MoveDirectionEnum move :possibleMoves) {
             State state = currentState.copyState();
             state.setParentMove(move);
             state.setDepth(currentState.getDepth()+1);
             state.move(move);
-            statesToVisit.add(state);
+            if(!previousPuzzles.contains(state.getPuzzle())){
+                statesToVisit.add(state);
+            }
         }
     }
 

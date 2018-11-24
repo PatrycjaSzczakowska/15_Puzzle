@@ -54,4 +54,7 @@ public class State {
         moves = moves + move.getLetter();
     }
 
+    public Puzzle getPuzzle() {
+        return puzzle;
+    }
 }

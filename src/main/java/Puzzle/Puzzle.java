@@ -1,5 +1,8 @@
 package Puzzle;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -150,5 +153,17 @@ public class Puzzle {
         return newPuzzle;
     }
 
-    ;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Puzzle)) return false;
+
+        Puzzle puzzle = (Puzzle) o;
+
+        return new EqualsBuilder()
+                .append(board, puzzle.board)
+                .append(emptyElementPosition, puzzle.emptyElementPosition)
+                .isEquals();
+    }
 }
