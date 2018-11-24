@@ -14,7 +14,7 @@ public class State {
     public State(Puzzle puzzle, String moves) {
         this.puzzle = puzzle;
         this.moves = moves;
-        this.depth=0;
+        this.depth = 0;
     }
 
     public boolean isGoalState() {

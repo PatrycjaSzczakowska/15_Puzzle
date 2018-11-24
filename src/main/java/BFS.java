@@ -37,7 +37,7 @@ public class BFS {
             if (currentState.isGoalState()) {
                 time = (int) ((System.nanoTime() - startTime) / 1000000);
                 movesOfSolution = currentState.getDoneMoves();
-                maxDepth=currentState.getDepth();
+                maxDepth = currentState.getDepth();
                 return;
             }
             exploreState(currentState);
@@ -46,25 +46,25 @@ public class BFS {
     }
 
     private void exploreState(State currentState) {
-        List<MoveDirectionEnum> possibleMoves= currentState.getPossibleMoves();
+        List<MoveDirectionEnum> possibleMoves = currentState.getPossibleMoves();
         Collections.sort(possibleMoves);
-        for (MoveDirectionEnum move :possibleMoves) {
+        for (MoveDirectionEnum move : possibleMoves) {
             State state = currentState.copyState();
             state.setParentMove(move);
-            state.setDepth(currentState.getDepth()+1);
+            state.setDepth(currentState.getDepth() + 1);
             state.move(move);
-            if(!previousPuzzles.contains(state.getPuzzle())){
+            if (!previousPuzzles.contains(state.getPuzzle())) {
                 statesToVisit.add(state);
             }
         }
     }
 
-    public String getSolutionToString(){
-        StringBuilder stringBuilder=new StringBuilder();
-        stringBuilder.append("Moves: "+ movesOfSolution+"\n");
-        stringBuilder.append("Time in miliseconds "+time+"\n");
-        stringBuilder.append("Visited states: "+ visitedStates+ "\n");
-        stringBuilder.append("Max depth: "+ maxDepth + "\n");
+    public String getSolutionToString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Moves: " + movesOfSolution + "\n");
+        stringBuilder.append("Time in miliseconds " + time + "\n");
+        stringBuilder.append("Visited states: " + visitedStates + "\n");
+        stringBuilder.append("Max depth: " + maxDepth + "\n");
         return stringBuilder.toString();
     }
 

@@ -32,8 +32,8 @@ public class Puzzle {
     public void shuffle(int numberOfIterations) {
         MoveDirectionEnum moveDirection;
         for (int i = 0; i < numberOfIterations; i++) {
-            moveDirection=MoveDirectionEnum.getRandomMove();
-            if(validateMove(moveDirection)){
+            moveDirection = MoveDirectionEnum.getRandomMove();
+            if (validateMove(moveDirection)) {
                 move(moveDirection);
             }
         }

@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Random;
 
 public enum MoveDirectionEnum implements Comparator<MoveDirectionEnum> {
-    LEFT('L',1),
-    RIGHT('R',2),
-    DOWN('D',3),
-    UP('U',4);
+    LEFT('L', 1),
+    RIGHT('R', 2),
+    DOWN('D', 3),
+    UP('U', 4);
 
     private char letter;
     private int order;
@@ -59,9 +59,9 @@ public enum MoveDirectionEnum implements Comparator<MoveDirectionEnum> {
     }
 
     public int compare(MoveDirectionEnum o1, MoveDirectionEnum o2) {
-        if(o1.getOrder()<o2.getOrder()){
+        if (o1.getOrder() < o2.getOrder()) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
