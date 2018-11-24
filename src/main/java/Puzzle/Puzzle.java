@@ -12,9 +12,9 @@ public class Puzzle {
     private int sideLength;
 
     public Puzzle(int sideLength) {
-        this.sideLength =sideLength;
+        this.sideLength = sideLength;
         this.board = new int[sideLength][sideLength];
-        this.gameSize = (int) (Math.pow(sideLength,2) - 1);
+        this.gameSize = (int) (Math.pow(sideLength, 2) - 1);
 
         fillCorrectly();
     }
@@ -43,7 +43,7 @@ public class Puzzle {
     public boolean setXYElement(int x, int y, int value) {
         if (x > board[0].length || x < 0 ||
                 y > board.length || y < 0 ||
-                value < 0 || value >gameSize) {
+                value < 0 || value > gameSize) {
             return false;
         }
         board[x][y] = value;
@@ -60,7 +60,6 @@ public class Puzzle {
         board[board.length - 1][board[0].length - 1] = 0;
         movableElementPosition = new MovableElementPosition(board.length - 1, board[0].length - 1);
     }
-
 
     @Override
     public String toString() {
