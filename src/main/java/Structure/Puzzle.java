@@ -1,7 +1,5 @@
 package Structure;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,9 @@
 package Structure;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public enum MoveDirectionEnum {
     RIGHT('R', 0, 1),
