@@ -1,19 +1,41 @@
-import Structure.MoveDirectionEnum;
+import DAO.FilePuzzleDao;
+import Solver.*;
 import Structure.Puzzle;
-import Solver.DFS;
 
 public class Main {
+
     public static void main(String[] args) {
-        Puzzle puzzle = new Puzzle(4);
-        puzzle.fillCorrectly();
+        try {
+            FilePuzzleDao dao = new FilePuzzleDao("pliki/1.txt");
+            Puzzle puzzle = dao.read();
+            puzzle.print();
 
-        puzzle.shuffle(12);
+            //parametry
+            SolverEnum solution = SolverEnum.DFS;
+            ASolver solver = null;
+            if (SolverEnum.ASTAR.equals(solution)) {
+                //set heuristic
+                HeuristicEnum heuristic = HeuristicEnum.HAMMING;
 
-        puzzle.print();
-        char [] moveOrder = {'R','L','U','D'};
-        DFS dfs = new DFS(puzzle, moveOrder);
-        dfs.run();
-        System.out.print(dfs.getSolutionToString());
+                solver = new ASTAR(puzzle, heuristic);
+            } else {
+                //set move order
+                char[] moveOrder = {'R', 'L', 'U', 'D'};
+
+                if (SolverEnum.BFS.equals(solution)) {
+                    solver = new BFS(puzzle, moveOrder);
+                } else {
+                    solver = new DFS(puzzle, moveOrder);
+                }
+            }
+
+            solver.run();
+            System.out.print(solver.getSolutionToString());
+
+        } catch (Exception e) {
+            System.out.print(e.getStackTrace().toString());
+        }
+
 
     }
 }

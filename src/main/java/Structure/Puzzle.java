@@ -17,6 +17,19 @@ public class Puzzle {
         this.gameSize = (int) (Math.pow(sideLength, 2) - 1);
     }
 
+    public void fill(int [][] values) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                board[i][j] = values[i][j];
+                if(board[i][j]==0){
+                    this.emptyElementPosition = new Position(i, j);
+                }
+            }
+        }
+    }
+
+
+
     public void fillCorrectly() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
@@ -87,33 +100,14 @@ public class Puzzle {
     }
 
     public void move(MoveDirectionEnum moveDirection) {
-        switch (moveDirection) {
-            case UP: {
-                swap(emptyElementPosition.getX(), emptyElementPosition.getY(),
-                        emptyElementPosition.getX() - 1, emptyElementPosition.getY());
-                break;
-            }
-            case DOWN: {
-                swap(emptyElementPosition.getX(), emptyElementPosition.getY(),
-                        emptyElementPosition.getX() + 1, emptyElementPosition.getY());
-                break;
 
-            }
-            case LEFT: {
-                swap(emptyElementPosition.getX(), emptyElementPosition.getY(),
-                        emptyElementPosition.getX(), emptyElementPosition.getY() - 1);
-                break;
-            }
-            case RIGHT: {
-                swap(emptyElementPosition.getX(), emptyElementPosition.getY(),
-                        emptyElementPosition.getX(), emptyElementPosition.getY() + 1);
-                break;
-            }
-        }
+        swap(emptyElementPosition.getX(), emptyElementPosition.getY(),
+                emptyElementPosition.getX() + moveDirection.getX(), emptyElementPosition.getY() + moveDirection.getY());
+
     }
 
     public List<MoveDirectionEnum> getPossibleMoves(List<MoveDirectionEnum> moves) {
-        List<MoveDirectionEnum> possibleMoves= new ArrayList<MoveDirectionEnum>();
+        List<MoveDirectionEnum> possibleMoves = new ArrayList<MoveDirectionEnum>();
         for (MoveDirectionEnum move : moves) {
             if (validateMove(move)) {
                 possibleMoves.add(move);
@@ -125,10 +119,8 @@ public class Puzzle {
     public boolean isGoalState() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j] != board.length * i + j + 1) {
-                    if (!(i == sideLength - 1 && j == sideLength - 1)) {
-                        return false;
-                    }
+                if (!checkFieldCorrectness(i, j)) {
+                    return false;
                 }
             }
         }
@@ -149,5 +141,48 @@ public class Puzzle {
         }
 
         return newPuzzle;
+    }
+
+    public boolean checkFieldCorrectness(int x, int y) {
+        if (board[x][y] == x * sideLength + y + 1) {
+            return true;
+        } else if (y == sideLength - 1 && x == sideLength - 1 && board[x][y] == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getManhattanDistanceForField(int x, int y) {
+        int correctX=(board[x][y]-1)/sideLength;
+        int correctY=(board[x][y]%sideLength)-1;
+        if(correctY==-1){
+            correctY=sideLength-1;
+        }
+        return Math.abs(correctX-x)+Math.abs(correctY-y);
+    }
+
+    public int getManhattanDistance() {
+        //TODO
+        int manhattanDistance=0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if(board[i][j]!=0){
+                    manhattanDistance+= getManhattanDistanceForField(i,j);
+                }
+            }
+        }
+        return manhattanDistance;
+    }
+
+    public int getHammingDistance() {
+        int hammingDistance = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (!checkFieldCorrectness(i, j)&&board[i][j]!=0) {
+                    hammingDistance++;
+                }
+            }
+        }
+        return hammingDistance;
     }
 }
