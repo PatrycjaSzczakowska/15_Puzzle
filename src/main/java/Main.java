@@ -12,7 +12,7 @@ public class Main {
 
             //parametry
             SolverEnum solution = SolverEnum.DFS;
-            ASolver solver = null;
+            ASolver solver;
             if (SolverEnum.ASTAR.equals(solution)) {
                 //set heuristic
                 HeuristicEnum heuristic = HeuristicEnum.HAMMING;

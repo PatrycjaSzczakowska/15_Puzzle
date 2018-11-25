@@ -6,13 +6,11 @@ import java.util.List;
 public class Puzzle {
     private int[][] board;
     private Position emptyElementPosition;
-    private int gameSize;
     private int sideLength;
 
     public Puzzle(int sideLength) {
         this.sideLength = sideLength;
         this.board = new int[sideLength][sideLength];
-        this.gameSize = (int) (Math.pow(sideLength, 2) - 1);
     }
 
     public void fill(int [][] values) {
@@ -57,11 +55,11 @@ public class Puzzle {
         }
     }
 
-    public void setEmptyElementPosition(Position position) {
+    private void setEmptyElementPosition(Position position) {
         emptyElementPosition = position;
     }
 
-    public void swap(int x1, int y1, int x2, int y2) {
+    private void swap(int x1, int y1, int x2, int y2) {
         int tmp = board[x1][y1];
         board[x1][y1] = board[x2][y2];
         board[x2][y2] = tmp;
@@ -75,11 +73,11 @@ public class Puzzle {
         }
     }
 
-    public void set(int x, int y, int value) {
+    private void set(int x, int y, int value) {
         board[x][y] = value;
     }
 
-    public boolean validateMove(MoveDirectionEnum moveDirection) {
+    private boolean validateMove(MoveDirectionEnum moveDirection) {
         switch (moveDirection) {
             case UP:
                 if (emptyElementPosition.getX() == 0) return false;
@@ -141,7 +139,7 @@ public class Puzzle {
         return newPuzzle;
     }
 
-    public boolean checkFieldCorrectness(int x, int y) {
+    private boolean checkFieldCorrectness(int x, int y) {
         if (board[x][y] == x * sideLength + y + 1) {
             return true;
         } else if (y == sideLength - 1 && x == sideLength - 1 && board[x][y] == 0) {
@@ -150,7 +148,7 @@ public class Puzzle {
         return false;
     }
 
-    public int getManhattanDistanceForField(int x, int y) {
+    private int getManhattanDistanceForField(int x, int y) {
         int correctX=(board[x][y]-1)/sideLength;
         int correctY=(board[x][y]%sideLength)-1;
         if(correctY==-1){

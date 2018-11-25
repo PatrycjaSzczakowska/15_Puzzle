@@ -18,7 +18,7 @@ public class FilePuzzleDao {
 
         int rows, columns;
 
-        Puzzle puzzle = null;
+        Puzzle puzzle;
         try {
             File file = new File(fileName);
             Scanner scanner = new Scanner(file);
