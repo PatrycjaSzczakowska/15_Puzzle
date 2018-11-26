@@ -16,25 +16,24 @@ public class FilePuzzleDao {
 
     public Puzzle read() throws DaoException {
 
-        int rows, columns;
+        int sideLength;
 
         Puzzle puzzle;
         try {
             File file = new File(fileName);
             Scanner scanner = new Scanner(file);
 
-            rows = scanner.nextInt();
-            columns = scanner.nextInt();
+            sideLength = scanner.nextInt();
 
-            int values[][] = new int[rows][columns];
+            int values[][] = new int[sideLength][sideLength];
             int i = 0;
 
             while (scanner.hasNextInt()) {
-                values[(int) i / rows][i % rows] = scanner.nextInt();
+                values[(int) i / sideLength][i % sideLength] = scanner.nextInt();
                 i++;
             }
 
-            puzzle = new Puzzle(rows);
+            puzzle = new Puzzle(sideLength);
             puzzle.fill(values);
             scanner.close();
 
@@ -45,42 +44,21 @@ public class FilePuzzleDao {
         return puzzle;
     }
 
-//    public void write(final SudokuBoard obj) throws DaoException {
-//        try {
-//            File file = new File(fileName);
-//
-//            PrintWriter printWriter = new PrintWriter(file);
-//
-//            int tmp;
-//
-//            for (int i = 0; i < 81; i++) {
-//                printWriter.print(obj.get((int) i / 9, i % 9));
-//                if (i % 9 == 8) {
-//                    printWriter.write("\r\n");
-//                } else {
-//                    printWriter.write(" ");
-//                }
-//            }
-//            printWriter.write("\r\n");
-//
-//            for (int i = 0; i < 81; i++) {
-//                printWriter.print(obj.getFieldPermanence((int) i / 9, i % 9));
-//                if (i % 9 == 8) {
-//                    printWriter.write("\r\n");
-//                } else {
-//                    printWriter.write(" ");
-//                }
-//            }
-//
-//
-//            printWriter.close();
-//
-//        } catch (FileNotFoundException e) {
-//            throw new DaoException("", e);
-//        }
-//    }
-//
-//    @Override
-//    public void finalize() {
-//    }
+    public void write(Puzzle puzzle){
+        File file = new File(fileName);
+        try(PrintWriter writer = new PrintWriter(file)){
+            writer.write(Integer.toString(puzzle.getSideLength()));
+            writer.write('\n');
+            for (int i = 0; i < puzzle.getSideLength(); i++) {
+                for (int j = 0; j < puzzle.getSideLength(); j++) {
+                    writer.write(Integer.toString(puzzle.getBoard()[i][j]));
+                    writer.write(" ");
+                }
+                writer.write('\n');
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -187,4 +187,12 @@ public class Puzzle {
         }
         return hammingDistance;
     }
+
+    public int[][] getBoard() {
+        return board.clone();
+    }
+
+    public int getSideLength() {
+        return sideLength;
+    }
 }
