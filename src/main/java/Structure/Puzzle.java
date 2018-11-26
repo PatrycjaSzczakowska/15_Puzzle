@@ -103,7 +103,7 @@ public class Puzzle {
     }
 
     public List<MoveDirectionEnum> getPossibleMoves(List<MoveDirectionEnum> moves) {
-        List<MoveDirectionEnum> possibleMoves = new ArrayList<MoveDirectionEnum>();
+        List<MoveDirectionEnum> possibleMoves = new ArrayList<>();
         for (MoveDirectionEnum move : moves) {
             if (validateMove(move)) {
                 possibleMoves.add(move);
@@ -149,8 +149,16 @@ public class Puzzle {
     }
 
     private int getManhattanDistanceForField(int x, int y) {
+        //Returning distance for element '0'
+        if(board[x][y] == 0){
+            return Math.abs(board.length-x-1)+Math.abs(board[0].length-y-1);
+        }
+
+
         int correctX=(board[x][y]-1)/sideLength;
-        int correctY=(board[x][y]%sideLength)-1;
+        int correctY = (board[x][y]-1)%sideLength;
+
+
         if(correctY==-1){
             correctY=sideLength-1;
         }
@@ -158,13 +166,11 @@ public class Puzzle {
     }
 
     public int getManhattanDistance() {
-        //TODO
         int manhattanDistance=0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if(board[i][j]!=0){
-                    manhattanDistance+= getManhattanDistanceForField(i,j);
-                }
+                manhattanDistance+= getManhattanDistanceForField(i,j);
+
             }
         }
         return manhattanDistance;

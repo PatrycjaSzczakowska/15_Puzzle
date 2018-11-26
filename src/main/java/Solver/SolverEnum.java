@@ -1,7 +1,7 @@
 package Solver;
 
 public enum SolverEnum {
-    ASTAR,
+    ASTR,
     BFS,
     DFS;
 
