@@ -1,29 +1,27 @@
-import DAO.FilePuzzleDao;
-import DAO.FileWriter;
-import Solver.*;
-import Structure.Puzzle;
-
 public class Main {
 
     public static void main(String[] args) {
 
-        Puzzle testPuzzle = new Puzzle(4);
-        testPuzzle.fillCorrectly();
-        testPuzzle.shuffle(100);
-        FilePuzzleDao puzzleDao = new FilePuzzleDao("pliki/test.txt");
-        puzzleDao.write(testPuzzle);
+        AutomatizedReportGenerator reportGenerator = new AutomatizedReportGenerator();
+        reportGenerator.generate();
 
-        String[] cmdArgs = new String[5];
-        cmdArgs[0]="astr";
-        cmdArgs[1]="hamm";
-        cmdArgs[2]="pliki/test.txt";
-        cmdArgs[3]="pliki/solution.txt";
-        cmdArgs[4]="pliki/stats.txt";
-
-
-
-        CmdMain cmdMain = new CmdMain();
-        cmdMain.main(cmdArgs);
+//        Puzzle testPuzzle = new Puzzle(4);
+//        testPuzzle.fillCorrectly();
+//        testPuzzle.shuffle(100);
+//        FilePuzzleDao puzzleDao = new FilePuzzleDao("pliki/test.txt");
+//        puzzleDao.write(testPuzzle);
+//
+//        String[] cmdArgs = new String[5];
+//        cmdArgs[0]="astr";
+//        cmdArgs[1]="hamm";
+//        cmdArgs[2]="pliki/test.txt";
+//        cmdArgs[3]="pliki/solution.txt";
+//        cmdArgs[4]="pliki/stats.txt";
+//
+//
+//
+//        CmdMain cmdMain = new CmdMain();
+//        cmdMain.main(cmdArgs);
 
 
 //        try {
@@ -49,7 +47,7 @@ public class Main {
 //                }
 //            }
 //
-//            solver.run();
+//            solver.generate();
 //
 //
 //            System.out.print(solver.getSolutionToString());
