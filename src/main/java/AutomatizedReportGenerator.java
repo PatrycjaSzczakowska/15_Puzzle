@@ -76,7 +76,7 @@ public class AutomatizedReportGenerator {
         String solutionFilename = "pliki/solution-" + puzzle.getSideLength() + "-" + solverStrategy + "-" + solverMode + ".txt" ;
         String solutionStatisticsFilename = "pliki/stats-" + puzzle.getSideLength() + "-" + solverStrategy + "-" + solverMode + ".txt" ;
 
-        CmdMain cmdMain = new CmdMain();
-        cmdMain.main(new String[]{solverStrategy, solverMode, puzzleFilename, solutionFilename, solutionStatisticsFilename});
+        CommandProcessor commandProcessor = new CommandProcessor();
+        commandProcessor.processArgs(new String[]{solverStrategy, solverMode, puzzleFilename, solutionFilename, solutionStatisticsFilename});
     }
 }

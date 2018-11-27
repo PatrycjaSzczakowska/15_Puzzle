@@ -4,8 +4,8 @@ import DAO.FileWriter;
 import Solver.*;
 import Structure.Puzzle;
 
-public class CmdMain {
-    public void main(String[] args){
+public class CommandProcessor {
+    public void processArgs(String[] args){
         SolverEnum solverStrategy = SolverEnum.valueOf(args[0].toUpperCase());
         String solverMode = args[1];
         String puzzleFilename = args[2];
