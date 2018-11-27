@@ -5,7 +5,6 @@ import Structure.Puzzle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class DFS extends ASolver {
     private int givenDepthValue = 24;
@@ -21,9 +20,9 @@ public class DFS extends ASolver {
 
 //        this.visitedStates = new ArrayList<State>();
 
-        this.visitedStatesNumber = 0;
-        this.maxDepth = 0;
         this.processedStatesNumber = 0;
+        this.maxDepth = 0;
+        this.visitedStatesNumber = 0;
         this.movesOfSolution = new String();
     }
 
@@ -35,7 +34,7 @@ public class DFS extends ASolver {
     }
 
     private boolean DFS(State currentState) {
-        processedStatesNumber++;
+        visitedStatesNumber++;
         boolean tmp;
         if (currentState.isGoalState()) {
             maxDepth = currentState.getDepth();
@@ -45,7 +44,6 @@ public class DFS extends ASolver {
             return false;
         }
         for (State state : getStateChildren(currentState)) {
-            //visitedStatesNumber++;
             tmp = DFS(state);
             if (tmp) {
                 return true;
@@ -58,6 +56,7 @@ public class DFS extends ASolver {
         List<State> stateChildren = new ArrayList<State>();
         List<MoveDirectionEnum> possibleMoves = currentState.getPossibleMoves(movesOrder);
         for (MoveDirectionEnum move : possibleMoves) {
+            processedStatesNumber++;
             State state = currentState.copyState();
             state.setParentMove(move);
             state.setDepth(currentState.getDepth() + 1);

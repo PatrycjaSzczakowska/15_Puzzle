@@ -28,8 +28,8 @@ public class ASTAR extends ASolver {
 
         this.previousPuzzles = new ArrayList<Puzzle>();
         this.maxDepth = 0;
-        this.visitedStatesNumber = 0;
         this.processedStatesNumber = 0;
+        this.visitedStatesNumber = 0;
         this.movesOfSolution = new String();
     }
 
@@ -40,13 +40,13 @@ public class ASTAR extends ASolver {
 
         while (!statesToVisit.isEmpty()) {
             StateA currentState = statesToVisit.first();
-//            visitedStatesNumber++;
+//            processedStatesNumber++;
             if (currentState.isGoalState()) {
                 time = (int) ((System.nanoTime() - startTime) / 1000000);
                 movesOfSolution = currentState.getDoneMoves();
                 maxDepth = currentState.getDepth();
-                processedStatesNumber = previousPuzzles.size();
-                visitedStatesNumber = previousPuzzles.size() + statesToVisit.size();
+                visitedStatesNumber = previousPuzzles.size();
+                processedStatesNumber = previousPuzzles.size() + statesToVisit.size();
                 isSolved=true;
                 return;
             }
@@ -55,8 +55,8 @@ public class ASTAR extends ASolver {
             exploreState(currentState);
         }
         time = (int) ((System.nanoTime() - startTime) / 1000000);
-        processedStatesNumber = previousPuzzles.size();
-        visitedStatesNumber = previousPuzzles.size() + statesToVisit.size();
+        visitedStatesNumber = previousPuzzles.size();
+        processedStatesNumber = previousPuzzles.size() + statesToVisit.size();
     }
 
     private void exploreState(StateA currentState) {

@@ -23,8 +23,8 @@ public class BFS extends ASolver {
         //this.previousPuzzles = new ArrayList<Puzzle>();
 
         this.maxDepth = 0;
-        this.visitedStatesNumber = 0;
         this.processedStatesNumber = 0;
+        this.visitedStatesNumber = 0;
         this.movesOfSolution = new String();
     }
 
@@ -36,19 +36,19 @@ public class BFS extends ASolver {
         while (!statesToVisit.isEmpty()) {
             State currentState = statesToVisit.remove();
             //previousPuzzles.add(currentState.getPuzzle());
-            processedStatesNumber++;
+            visitedStatesNumber++;
             if (currentState.isGoalState()) {
                 time = (int) ((System.nanoTime() - startTime) / 1000000);
                 movesOfSolution = currentState.getDoneMoves();
                 maxDepth = currentState.getDepth();
-                visitedStatesNumber = processedStatesNumber + statesToVisit.size();
+                processedStatesNumber = visitedStatesNumber + statesToVisit.size();
                 isSolved = true;
                 return;
             }
             exploreState(currentState);
         }
         time = (int) ((System.nanoTime() - startTime) / 1000000);
-        visitedStatesNumber = processedStatesNumber + statesToVisit.size();
+        processedStatesNumber = visitedStatesNumber + statesToVisit.size();
     }
 
     private void exploreState(State currentState) {
