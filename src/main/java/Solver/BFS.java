@@ -36,17 +36,19 @@ public class BFS extends ASolver {
         while (!statesToVisit.isEmpty()) {
             State currentState = statesToVisit.remove();
             //previousPuzzles.add(currentState.getPuzzle());
-            visitedStatesNumber++;
+            processedStatesNumber++;
             if (currentState.isGoalState()) {
                 time = (int) ((System.nanoTime() - startTime) / 1000000);
                 movesOfSolution = currentState.getDoneMoves();
                 maxDepth = currentState.getDepth();
+                visitedStatesNumber = processedStatesNumber + statesToVisit.size();
                 isSolved = true;
                 return;
             }
             exploreState(currentState);
         }
         time = (int) ((System.nanoTime() - startTime) / 1000000);
+        visitedStatesNumber = processedStatesNumber + statesToVisit.size();
     }
 
     private void exploreState(State currentState) {

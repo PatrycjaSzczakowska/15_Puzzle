@@ -35,7 +35,7 @@ public abstract class ASolver implements ISolver {
             builder.append('\n');
             builder.append(visitedStatesNumber);
             builder.append('\n');
-            builder.append("Processed States??TODO");
+            builder.append(processedStatesNumber);
             builder.append('\n');
             builder.append(maxDepth);
             builder.append('\n');

@@ -38,7 +38,7 @@ public class AutomatizedReportGenerator {
         Puzzle puzzle4x4 = new Puzzle(4);
         puzzle4x4.fillCorrectly();
         puzzle4x4.shuffle(50);
-        String puzzle4x4Filename = "4x4.txt";
+        String puzzle4x4Filename = "pliki/4x4.txt";
         FilePuzzleDao dao4 = new FilePuzzleDao(puzzle4x4Filename);
         dao4.write(puzzle4x4);
 

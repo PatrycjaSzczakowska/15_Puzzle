@@ -11,15 +11,15 @@ public class DFS extends ASolver {
     private int givenDepthValue = 24;
     private List<MoveDirectionEnum> movesOrder;
 
-    private Stack<State> statesStack;
-    private List<State> visitedStates;
+//    private Stack<State> statesStack;
+//    private List<State> visitedStates;
     private State stateToSolve;
 
     public DFS(Puzzle puzzle, char[] movesOrder) {
         this.movesOrder = MoveDirectionEnum.getAllMoves(movesOrder);
         this.stateToSolve = new State(puzzle, "");
 
-        this.visitedStates = new ArrayList<State>();
+//        this.visitedStates = new ArrayList<State>();
 
         this.visitedStatesNumber = 0;
         this.maxDepth = 0;
@@ -31,10 +31,11 @@ public class DFS extends ASolver {
         Long startTime = System.nanoTime();
         isSolved = DFS(stateToSolve);
         time = (int) ((System.nanoTime() - startTime) / 1000000);
+
     }
 
     private boolean DFS(State currentState) {
-        visitedStatesNumber++;
+        processedStatesNumber++;
         boolean tmp;
         if (currentState.isGoalState()) {
             maxDepth = currentState.getDepth();
@@ -44,6 +45,7 @@ public class DFS extends ASolver {
             return false;
         }
         for (State state : getStateChildren(currentState)) {
+            //visitedStatesNumber++;
             tmp = DFS(state);
             if (tmp) {
                 return true;
