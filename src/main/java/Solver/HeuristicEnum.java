@@ -2,7 +2,8 @@ package Solver;
 
 public enum HeuristicEnum {
     HAMMING,
-    MANHATTAN;
+    MANHATTAN,
+    MANHATTANWITHLINEARCONFLICTS;
 
     HeuristicEnum() {
     }

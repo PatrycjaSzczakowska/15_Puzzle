@@ -25,11 +25,11 @@ public abstract class ASolver implements ISolver {
         return stringBuilder.toString();
     }
 
-    public String getSolutionStatistics(){
+    public String getSolutionStatistics() {
         StringBuilder builder = new StringBuilder();
-        if(!isSolved){
+        if (!isSolved) {
             builder.append(-1);
-        }else{
+        } else {
             builder.append(movesOfSolution.length());
             builder.append('\n');
             builder.append(visitedStatesNumber);
@@ -38,7 +38,7 @@ public abstract class ASolver implements ISolver {
             builder.append('\n');
             builder.append(maxDepth);
             builder.append('\n');
-            builder.append(Math.round((time/1000.0)*1000)/1000.00);
+            builder.append(Math.round((time / 1000.0) * 1000) / 1000.00);
             builder.append('\n');
         }
 

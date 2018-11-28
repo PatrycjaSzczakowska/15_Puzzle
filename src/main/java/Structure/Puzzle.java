@@ -13,18 +13,16 @@ public class Puzzle {
         this.board = new int[sideLength][sideLength];
     }
 
-    public void fill(int [][] values) {
+    public void fill(int[][] values) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 board[i][j] = values[i][j];
-                if(board[i][j]==0){
+                if (board[i][j] == 0) {
                     this.emptyElementPosition = new Position(i, j);
                 }
             }
         }
     }
-
-
 
     public void fillCorrectly() {
         for (int i = 0; i < board.length; i++) {
@@ -148,39 +146,108 @@ public class Puzzle {
         return false;
     }
 
+    private int getCorrectX(int x, int y) {
+        //Returning distance for element '0'
+        if (board[x][y] == 0) {
+            return Math.abs(board.length - x - 1);
+        }
+        int correctX = (board[x][y] - 1) / sideLength;
+        return correctX;
+    }
+
+    private int getCorrectY(int x, int y) {
+        //Returning distance for element '0'
+        if (board[x][y] == 0) {
+            return Math.abs(board[0].length - y - 1);
+        }
+        int correctY = (board[x][y] - 1) % sideLength;
+
+        if (correctY == -1) {
+            correctY = sideLength - 1;
+        }
+
+        return correctY;
+    }
+
     private int getManhattanDistanceForField(int x, int y) {
         //Returning distance for element '0'
-        if(board[x][y] == 0){
-            return Math.abs(board.length-x-1)+Math.abs(board[0].length-y-1);
+        if (board[x][y] == 0) {
+            return Math.abs(board.length - x - 1) + Math.abs(board[0].length - y - 1);
         }
 
+        int correctX = (board[x][y] - 1) / sideLength;
+        int correctY = (board[x][y] - 1) % sideLength;
 
-        int correctX=(board[x][y]-1)/sideLength;
-        int correctY = (board[x][y]-1)%sideLength;
-
-
-        if(correctY==-1){
-            correctY=sideLength-1;
+        if (correctY == -1) {
+            correctY = sideLength - 1;
         }
-        return Math.abs(correctX-x)+Math.abs(correctY-y);
+        return Math.abs(correctX - x) + Math.abs(correctY - y);
     }
 
     public int getManhattanDistance() {
-        int manhattanDistance=0;
+        int manhattanDistance = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                manhattanDistance+= getManhattanDistanceForField(i,j);
+                manhattanDistance += getManhattanDistanceForField(i, j);
 
             }
         }
         return manhattanDistance;
     }
 
+    public int getManhattanDistanceWithLinearConflicts() {
+        return getManhattanDistance() + countLinearConflicts();
+    }
+
+    private int countLinearConflicts() {
+        // Two tiles ‘a’ and ‘b’ are in a linear conflict if they are in the same row or column
+        // ,also their goal positions are in the same row or column and the goal position of one
+        // of the tiles is blocked by the other tile in that row.
+
+
+        return (countLinearHorizontalConflicts() + countLinearVerticalConflicts()) * 2;
+    }
+
+    private int countLinearHorizontalConflicts() {
+        int horizontalConflicts = 0;
+
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board[0].length - 1; column++) {
+                if (getCorrectX(row, column) == row) {
+                    for (int i = column + 1; i < board[0].length; i++) {
+                        if (getCorrectX(row, i) == row && (getCorrectY(row, column) >= i || getCorrectY(row, i) <= column)) {
+                            horizontalConflicts++;
+                        }
+                    }
+                }
+            }
+        }
+        return horizontalConflicts;
+    }
+
+    private int countLinearVerticalConflicts() {
+        int verticalConflicts = 0;
+
+        for (int column = 0; column < board.length; column++) {
+            for (int row = 0; row < board[0].length - 1; row++) {
+                if (getCorrectY(row, column) == column) {
+                    for (int i = row + 1; i < board[0].length; i++) {
+                        if (getCorrectY(i, column) == column && (getCorrectX(row, column) >= i || getCorrectX(i, column) <= row)) {
+                            verticalConflicts++;
+                        }
+                    }
+                }
+            }
+        }
+        return verticalConflicts;
+    }
+
+
     public int getHammingDistance() {
         int hammingDistance = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (!checkFieldCorrectness(i, j)&&board[i][j]!=0) {
+                if (!checkFieldCorrectness(i, j) && board[i][j] != 0) {
                     hammingDistance++;
                 }
             }

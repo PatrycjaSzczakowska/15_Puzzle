@@ -15,11 +15,11 @@ public class ASTAR extends ASolver {
     public ASTAR(Puzzle puzzle, HeuristicEnum heuristic) {
         this.movesOrder = MoveDirectionEnum.getAllMoves();
 
-        this.stateToSolve = new StateA(puzzle, "",heuristic);
+        this.stateToSolve = new StateA(puzzle, "", heuristic);
 
         this.statesToVisit = new TreeSet<StateA>(new Comparator<StateA>() {
             public int compare(StateA o1, StateA o2) {
-                if(o1.getFunctionValue()==o2.getFunctionValue()){
+                if (o1.getFunctionValue() == o2.getFunctionValue()) {
                     return o1.getDoneMoves().compareTo(o2.getDoneMoves());
                 }
                 return o1.getFunctionValue() - o2.getFunctionValue();
@@ -47,7 +47,7 @@ public class ASTAR extends ASolver {
                 maxDepth = currentState.getDepth();
                 visitedStatesNumber = previousPuzzles.size();
                 processedStatesNumber = previousPuzzles.size() + statesToVisit.size();
-                isSolved=true;
+                isSolved = true;
                 return;
             }
             statesToVisit.remove(currentState);

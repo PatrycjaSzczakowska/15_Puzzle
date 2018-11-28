@@ -12,18 +12,21 @@ public class StateA extends State {
     }
 
     public StateA copyState() {
-        return new StateA(getPuzzle().getCopy(), new String(getDoneMoves()),heuristic);
+        return new StateA(getPuzzle().getCopy(), new String(getDoneMoves()), heuristic);
     }
 
-    public void calculateFunctionValue(){
-        if(HeuristicEnum.MANHATTAN.equals(heuristic)){
-            functionValue= getPuzzle().getManhattanDistance()+getDepth();
+    public void calculateFunctionValue() {
+        if (HeuristicEnum.MANHATTAN.equals(heuristic)) {
+            functionValue = getPuzzle().getManhattanDistance() + getDepth();
 
-        }else{
-            functionValue= getPuzzle().getHammingDistance()+getDepth();
+        } else if (HeuristicEnum.MANHATTANWITHLINEARCONFLICTS.equals(heuristic)) {
+            functionValue = getPuzzle().getManhattanDistanceWithLinearConflicts() + getDepth();
+        } else {
+            functionValue = getPuzzle().getHammingDistance() + getDepth();
         }
     }
-    public int getFunctionValue(){
+
+    public int getFunctionValue() {
         return this.functionValue;
     }
 

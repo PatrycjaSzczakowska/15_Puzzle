@@ -60,7 +60,7 @@ public class BFS extends ASolver {
             state.setDepth(currentState.getDepth() + 1);
             state.move(move);
             //if (!previousPuzzles.contains(state.getPuzzle())) {
-                statesToVisit.add(state);
+            statesToVisit.add(state);
             //}
         }
     }
