@@ -10,14 +10,14 @@ public class BFS extends ASolver {
 
     private State stateToSolve;
     private Queue<State> statesToVisit;
-    private List<Puzzle> previousPuzzles;
+    private HashMap<int[][], State> previousPuzzles;
 
     public BFS(Puzzle puzzle, char[] movesOrder) {
         this.movesOrder = MoveDirectionEnum.getAllMoves(movesOrder);
         this.stateToSolve = new State(puzzle, "");
 
         this.statesToVisit = new LinkedList<State>();
-        this.previousPuzzles = new ArrayList<Puzzle>();
+        this.previousPuzzles = new HashMap<>();
 
         this.maxDepth = 0;
         this.processedStatesNumber = 0;
@@ -32,7 +32,7 @@ public class BFS extends ASolver {
 
         while (!statesToVisit.isEmpty()) {
             State currentState = statesToVisit.remove();
-            previousPuzzles.add(currentState.getPuzzle());
+            previousPuzzles.put(currentState.getPuzzle().getBoard(),currentState);
             visitedStatesNumber++;
             if (currentState.isGoalState()) {
                 time = (int) ((System.nanoTime() - startTime) / 1000000);
@@ -52,11 +52,11 @@ public class BFS extends ASolver {
         List<MoveDirectionEnum> possibleMoves = currentState.getPossibleMoves(movesOrder);
         Collections.sort(possibleMoves);
         for (MoveDirectionEnum move : possibleMoves) {
-            final State state = currentState.copyState();
+            State state = currentState.copyState();
             state.setParentMove(move);
             state.setDepth(currentState.getDepth() + 1);
             state.move(move);
-            if (!previousPuzzles.stream().anyMatch(i -> i.getBoard() == state.getPuzzle().getBoard())) {
+            if (previousPuzzles.get(state.getPuzzle().getBoard()) == null) {
                 statesToVisit.add(state);
             }
         }
