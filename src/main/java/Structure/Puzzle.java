@@ -6,16 +6,18 @@ import java.util.List;
 public class Puzzle {
     private int[][] board;
     private Position emptyElementPosition;
-    private int sideLength;
+    private int rowNumber;
+    private int columnNumber;
 
-    public Puzzle(int sideLength) {
-        this.sideLength = sideLength;
-        this.board = new int[sideLength][sideLength];
+    public Puzzle(int rowNumber, int columnNumber) {
+        this.rowNumber = rowNumber;
+        this.columnNumber = columnNumber;
+        this.board = new int[rowNumber][columnNumber];
     }
 
     public void fill(int[][] values) {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
+        for (int i = 0; i < rowNumber; i++) {
+            for (int j = 0; j < columnNumber; j++) {
                 board[i][j] = values[i][j];
                 if (board[i][j] == 0) {
                     this.emptyElementPosition = new Position(i, j);
@@ -25,13 +27,13 @@ public class Puzzle {
     }
 
     public void fillCorrectly() {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                board[i][j] = board.length * i + j + 1;
+        for (int i = 0; i < rowNumber; i++) {
+            for (int j = 0; j < columnNumber; j++) {
+                board[i][j] = columnNumber * i + j + 1;
             }
         }
-        board[board.length - 1][board[0].length - 1] = 0;
-        this.emptyElementPosition = new Position(board.length - 1, board[0].length - 1);
+        board[rowNumber - 1][columnNumber - 1] = 0;
+        this.emptyElementPosition = new Position(rowNumber - 1, columnNumber - 1);
     }
 
     public void shuffle(int numberOfIterations) {
@@ -45,8 +47,8 @@ public class Puzzle {
     }
 
     public void print() {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
+        for (int i = 0; i < rowNumber; i++) {
+            for (int j = 0; j < columnNumber; j++) {
                 System.out.print(board[i][j] + " ");
             }
             System.out.println();
@@ -81,13 +83,13 @@ public class Puzzle {
                 if (emptyElementPosition.getX() == 0) return false;
                 else return true;
             case DOWN:
-                if (emptyElementPosition.getX() == (sideLength - 1)) return false;
+                if (emptyElementPosition.getX() == (rowNumber - 1)) return false;
                 else return true;
             case LEFT:
                 if (emptyElementPosition.getY() == 0) return false;
                 else return true;
             case RIGHT:
-                if (emptyElementPosition.getY() == (sideLength - 1)) return false;
+                if (emptyElementPosition.getY() == (columnNumber - 1)) return false;
                 else return true;
         }
         return true;
@@ -111,8 +113,8 @@ public class Puzzle {
     }
 
     public boolean isGoalState() {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
+        for (int i = 0; i < rowNumber; i++) {
+            for (int j = 0; j < columnNumber; j++) {
                 if (!checkFieldCorrectness(i, j)) {
                     return false;
                 }
@@ -122,10 +124,10 @@ public class Puzzle {
     }
 
     public Puzzle getCopy() {
-        Puzzle newPuzzle = new Puzzle(sideLength);
+        Puzzle newPuzzle = new Puzzle(rowNumber, columnNumber);
 
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
+        for (int i = 0; i < rowNumber; i++) {
+            for (int j = 0; j < columnNumber; j++) {
                 if (board[i][j] == 0) {
                     Position emptyElementPositionTmp = new Position(i, j);
                     newPuzzle.setEmptyElementPosition(emptyElementPositionTmp);
@@ -138,33 +140,27 @@ public class Puzzle {
     }
 
     private boolean checkFieldCorrectness(int x, int y) {
-        if (board[x][y] == x * sideLength + y + 1) {
+        if (board[x][y] == x * columnNumber + y + 1) {
             return true;
-        } else if (y == sideLength - 1 && x == sideLength - 1 && board[x][y] == 0) {
+        } else if (y == columnNumber - 1 && x == rowNumber - 1 && board[x][y] == 0) {
             return true;
         }
         return false;
     }
 
     private int getCorrectX(int x, int y) {
-        //Returning distance for element '0'
         if (board[x][y] == 0) {
-            return Math.abs(board.length - x - 1);
+            return rowNumber - 1;
         }
-        int correctX = (board[x][y] - 1) / sideLength;
+        int correctX = (board[x][y] - 1) / columnNumber;
         return correctX;
     }
 
     private int getCorrectY(int x, int y) {
-        //Returning distance for element '0'
         if (board[x][y] == 0) {
-            return Math.abs(board[0].length - y - 1);
+            return columnNumber - 1;
         }
-        int correctY = (board[x][y] - 1) % sideLength;
-
-        if (correctY == -1) {
-            correctY = sideLength - 1;
-        }
+        int correctY = (board[x][y] - 1) % columnNumber;
 
         return correctY;
     }
@@ -172,24 +168,23 @@ public class Puzzle {
     private int getManhattanDistanceForField(int x, int y) {
         //Returning distance for element '0'
         if (board[x][y] == 0) {
-            return Math.abs(board.length - x - 1) + Math.abs(board[0].length - y - 1);
+            return Math.abs(columnNumber - y - 1) + Math.abs(rowNumber - x - 1);
         }
 
-        int correctX = (board[x][y] - 1) / sideLength;
-        int correctY = (board[x][y] - 1) % sideLength;
+        int correctX = (board[x][y] - 1) / columnNumber;
+        int correctY = (board[x][y] - 1) % columnNumber;
 
         if (correctY == -1) {
-            correctY = sideLength - 1;
+            correctY = columnNumber - 1;
         }
         return Math.abs(correctX - x) + Math.abs(correctY - y);
     }
 
     public int getManhattanDistance() {
         int manhattanDistance = 0;
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
+        for (int i = 0; i < rowNumber; i++) {
+            for (int j = 0; j < columnNumber; j++) {
                 manhattanDistance += getManhattanDistanceForField(i, j);
-
             }
         }
         return manhattanDistance;
@@ -203,18 +198,16 @@ public class Puzzle {
         // Two tiles ‘a’ and ‘b’ are in a linear conflict if they are in the same row or column
         // ,also their goal positions are in the same row or column and the goal position of one
         // of the tiles is blocked by the other tile in that row.
-
-
         return (countLinearHorizontalConflicts() + countLinearVerticalConflicts()) * 2;
     }
 
     private int countLinearHorizontalConflicts() {
         int horizontalConflicts = 0;
 
-        for (int row = 0; row < board.length; row++) {
-            for (int column = 0; column < board[0].length - 1; column++) {
+        for (int row = 0; row < rowNumber; row++) {
+            for (int column = 0; column < columnNumber - 1; column++) {
                 if (getCorrectX(row, column) == row) {
-                    for (int i = column + 1; i < board[0].length; i++) {
+                    for (int i = column + 1; i < columnNumber; i++) {
                         if (getCorrectX(row, i) == row && (getCorrectY(row, column) >= i || getCorrectY(row, i) <= column)) {
                             horizontalConflicts++;
                         }
@@ -228,10 +221,10 @@ public class Puzzle {
     private int countLinearVerticalConflicts() {
         int verticalConflicts = 0;
 
-        for (int column = 0; column < board.length; column++) {
-            for (int row = 0; row < board[0].length - 1; row++) {
+        for (int column = 0; column < columnNumber; column++) {
+            for (int row = 0; row < rowNumber - 1; row++) {
                 if (getCorrectY(row, column) == column) {
-                    for (int i = row + 1; i < board[0].length; i++) {
+                    for (int i = row + 1; i < rowNumber; i++) {
                         if (getCorrectY(i, column) == column && (getCorrectX(row, column) >= i || getCorrectX(i, column) <= row)) {
                             verticalConflicts++;
                         }
@@ -245,8 +238,8 @@ public class Puzzle {
 
     public int getHammingDistance() {
         int hammingDistance = 0;
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
+        for (int i = 0; i < rowNumber; i++) {
+            for (int j = 0; j < columnNumber; j++) {
                 if (!checkFieldCorrectness(i, j) && board[i][j] != 0) {
                     hammingDistance++;
                 }
@@ -259,7 +252,15 @@ public class Puzzle {
         return board.clone();
     }
 
-    public int getSideLength() {
-        return sideLength;
+//    public int getSideLength() {
+//        return 0;
+//    }
+
+    public int getRowNumber() {
+        return rowNumber;
+    }
+
+    public int getColumnNumber() {
+        return columnNumber;
     }
 }

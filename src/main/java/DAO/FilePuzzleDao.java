@@ -16,24 +16,25 @@ public class FilePuzzleDao {
 
     public Puzzle read() throws DaoException {
 
-        int sideLength;
+        int rowNumber,columnNumber;
 
         Puzzle puzzle;
         try {
             File file = new File(fileName);
             Scanner scanner = new Scanner(file);
 
-            sideLength = scanner.nextInt();
+            rowNumber = scanner.nextInt();
+            columnNumber = scanner.nextInt();
 
-            int values[][] = new int[sideLength][sideLength];
+            int values[][] = new int[rowNumber][columnNumber];
             int i = 0;
 
             while (scanner.hasNextInt()) {
-                values[(int) i / sideLength][i % sideLength] = scanner.nextInt();
+                values[(int) i / columnNumber][i % columnNumber] = scanner.nextInt();
                 i++;
             }
 
-            puzzle = new Puzzle(sideLength);
+            puzzle = new Puzzle(rowNumber,columnNumber);
             puzzle.fill(values);
             scanner.close();
 
@@ -47,10 +48,10 @@ public class FilePuzzleDao {
     public void write(Puzzle puzzle){
         File file = new File(fileName);
         try(PrintWriter writer = new PrintWriter(file)){
-            writer.write(Integer.toString(puzzle.getSideLength()));
+            writer.write(Integer.toString(puzzle.getRowNumber())+" "+Integer.toString(puzzle.getColumnNumber()));
             writer.write('\n');
-            for (int i = 0; i < puzzle.getSideLength(); i++) {
-                for (int j = 0; j < puzzle.getSideLength(); j++) {
+            for (int i = 0; i < puzzle.getRowNumber(); i++) {
+                for (int j = 0; j < puzzle.getColumnNumber(); j++) {
                     writer.write(Integer.toString(puzzle.getBoard()[i][j]));
                     writer.write(" ");
                 }

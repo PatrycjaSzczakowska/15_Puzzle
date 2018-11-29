@@ -4,7 +4,7 @@ import Structure.Puzzle;
 
 public class AutomatizedReportGenerator {
     public void generate() {
-        Puzzle puzzle3x3 = new Puzzle(3);
+        Puzzle puzzle3x3 = new Puzzle(3,3);
         puzzle3x3.fillCorrectly();
         puzzle3x3.shuffle(50);
         String puzzle3x3Filename = "pliki/3x3.txt";
@@ -33,7 +33,7 @@ public class AutomatizedReportGenerator {
         runSample("dfs", "ulrd", puzzle3x3Filename);
 
 
-        Puzzle puzzle4x4 = new Puzzle(4);
+        Puzzle puzzle4x4 = new Puzzle(4,4);
         puzzle4x4.fillCorrectly();
         puzzle4x4.shuffle(50);
         String puzzle4x4Filename = "pliki/4x4.txt";
@@ -71,8 +71,8 @@ public class AutomatizedReportGenerator {
         } catch (DaoException e) {
             e.printStackTrace();
         }
-        String solutionFilename = "pliki/solution-" + puzzle.getSideLength() + "-" + solverStrategy + "-" + solverMode + ".txt";
-        String solutionStatisticsFilename = "pliki/stats-" + puzzle.getSideLength() + "-" + solverStrategy + "-" + solverMode + ".txt";
+        String solutionFilename = "pliki/solution-" + puzzle.getRowNumber() + "x" + puzzle.getColumnNumber() + " - " + solverStrategy + " - " + solverMode + ".txt";
+        String solutionStatisticsFilename = "pliki/stats-" + puzzle.getRowNumber() + "x" + puzzle.getColumnNumber() + "-" + solverStrategy + "-" + solverMode + ".txt";
 
         CommandProcessor commandProcessor = new CommandProcessor();
         commandProcessor.processArgs(new String[]{solverStrategy, solverMode, puzzleFilename, solutionFilename, solutionStatisticsFilename});
