@@ -36,8 +36,8 @@ public class DFS extends ASolver {
     private boolean DFS(State currentState) {
         visitedStatesNumber++;
         boolean tmp;
+        maxDepth = currentState.getDepth();
         if (currentState.isGoalState()) {
-            maxDepth = currentState.getDepth();
             movesOfSolution = currentState.getDoneMoves();
             return true;
         } else if (currentState.getDepth() == givenDepthValue) {

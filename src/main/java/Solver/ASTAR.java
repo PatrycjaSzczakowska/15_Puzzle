@@ -41,10 +41,12 @@ public class ASTAR extends ASolver {
         while (!statesToVisit.isEmpty()) {
             StateA currentState = statesToVisit.first();
 //            processedStatesNumber++;
+            if(currentState.getDepth()>maxDepth){
+                maxDepth=currentState.getDepth();
+            }
             if (currentState.isGoalState()) {
                 time = (int) ((System.nanoTime() - startTime) / 1000000);
                 movesOfSolution = currentState.getDoneMoves();
-                maxDepth = currentState.getDepth();
                 visitedStatesNumber = previousPuzzles.size();
                 processedStatesNumber = previousPuzzles.size() + statesToVisit.size();
                 isSolved = true;
