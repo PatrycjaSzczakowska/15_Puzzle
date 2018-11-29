@@ -48,8 +48,14 @@ public class CommandProcessor {
 
         solver.run();
 
-        FileWriter.write(solutionFilename, solver.getMovesOfSolution());
-        FileWriter.write(solutionStatisticsFilename, solver.getSolutionStatistics());
+        if (solver.isSolved()) {
+            FileWriter.write(solutionFilename, solver.getMovesOfSolution().length() + "\n" + solver.getMovesOfSolution());
+            FileWriter.write(solutionStatisticsFilename, solver.getSolutionStatistics());
+        } else {
+            FileWriter.write(solutionFilename, "-1");
+            FileWriter.write(solutionStatisticsFilename, solver.getSolutionStatistics());
+
+        }
 
     }
 }
